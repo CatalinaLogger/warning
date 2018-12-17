@@ -20,7 +20,7 @@ public class SystemController {
     private IUserService userService;
 
     @ApiOperation("用户登录")
-    @GetMapping("/login")
+    @PostMapping("/login")
     public JsonData login(@ApiParam(value = "账号/手机/邮箱", required = true) @RequestParam("username") String username,
                           @ApiParam(value = "密码", required = true) @RequestParam("password") String password) {
         String token = userService.login(username, password);

@@ -1,8 +1,10 @@
 package com.six.system.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class User {
@@ -24,27 +26,11 @@ public class User {
 
     private String avatar;
 
-    private String weChat;
-
-    private String qq;
-
-    private String openWe;
-
-    private String openQq;
-
     private String username;
 
     private String password;
 
     private String resetCode;
-
-    private Integer parentId;
-
-    private String parentName;
-
-    private String parentUsername;
-
-    private String level;
 
     private Integer status;
 
@@ -59,4 +45,8 @@ public class User {
     private Date operateTime;
 
     private String jsonInfo;
+
+    private List<Dept> dept;
+    @JsonIgnore
+    private Integer deptId;
 }

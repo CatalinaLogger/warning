@@ -2,6 +2,9 @@ package com.six.system.dao;
 
 import com.six.system.domain.Role;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 @Mapper
 public interface RoleMapper {
@@ -16,4 +19,10 @@ public interface RoleMapper {
     int updateByPrimaryKeySelective(Role record);
 
     int updateByPrimaryKey(Role record);
+    /********************************************/
+    List<Role> selectAll();
+
+    List<Role> selectByParentId(@Param("parentId") Integer parentId);
+
+    List<Role> selectByUserId(@Param("userId") Integer userId);
 }

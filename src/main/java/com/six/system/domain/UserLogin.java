@@ -23,4 +23,15 @@ public class UserLogin {
     private String loginBrowser;
 
     private String loginBrowserVersion;
+
+    public UserLogin(Integer userId, String userName, String loginIp, Date loginTime, String loginAddress, String loginSystem, String loginBrowser, String loginBrowserVersion) {
+        this.userId = userId;
+        this.userName = userName;
+        this.loginIp = loginIp;
+        this.loginTime = loginTime;
+        this.loginAddress = loginAddress;
+        this.loginSystem = loginSystem;
+        this.loginBrowser = loginBrowser;
+        this.loginBrowserVersion = loginBrowserVersion;
+    }
 }

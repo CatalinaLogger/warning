@@ -2,6 +2,9 @@ package com.six.system.dao;
 
 import com.six.system.domain.Auth;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 @Mapper
 public interface AuthMapper {
@@ -16,4 +19,12 @@ public interface AuthMapper {
     int updateByPrimaryKeySelective(Auth record);
 
     int updateByPrimaryKey(Auth record);
+    /********************************************/
+    List<Auth> selectAll();
+
+    List<Auth> selectByParentId(@Param("parentId") Integer parentId);
+
+    List<Auth> selectByUserId(@Param("userId") Integer userId);
+
+    List<Auth> selectByRoleId(@Param("roleId") Integer roleId);
 }

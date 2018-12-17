@@ -3,10 +3,11 @@ package com.six.system.common.pojo;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
+
 @Data
 @Component
-public class LoginUser {
-
+public class LoginUser implements Serializable {
     private Integer id;
 
     private String name;

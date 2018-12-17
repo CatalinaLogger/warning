@@ -19,15 +19,15 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from SYS_DEPT
+    from sys_dept
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from SYS_DEPT
+    delete from sys_dept
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.six.system.domain.Dept">
-    insert into SYS_DEPT (id, name, parent_id, 
+    insert into sys_dept (id, name, parent_id, 
       level, seq, remark, 
       operate_ip, operate_id, operate_name, 
       operate_time)
@@ -37,7 +37,7 @@
       #{operateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.six.system.domain.Dept">
-    insert into SYS_DEPT
+    insert into sys_dept
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -104,7 +104,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.six.system.domain.Dept">
-    update SYS_DEPT
+    update sys_dept
     <set>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
@@ -137,7 +137,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.six.system.domain.Dept">
-    update SYS_DEPT
+    update sys_dept
     set name = #{name,jdbcType=VARCHAR},
       parent_id = #{parentId,jdbcType=INTEGER},
       level = #{level,jdbcType=VARCHAR},
@@ -149,4 +149,25 @@
       operate_time = #{operateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <!--*************************************************************************************-->
+  <select id="selectAll" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM sys_dept
+  </select>
+  <select id="selectByParentId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM sys_dept
+    WHERE parent_id = #{parentId,jdbcType=INTEGER}
+    ORDER BY seq ASC
+  </select>
+  <select id="selectByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT
+    D.id, D.name, D.parent_id, D.level, D.seq, D.remark, D.operate_ip, D.operate_id, D.operate_name, D.operate_time
+    FROM sys_dept_user DU, sys_dept D
+    WHERE DU.user_id = #{userId,jdbcType=INTEGER}
+    AND DU.dept_id = D.id
+  </select>
 </mapper>

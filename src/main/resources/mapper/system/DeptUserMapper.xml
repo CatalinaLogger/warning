@@ -16,15 +16,15 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from SYS_DEPT_USER
+    from sys_dept_user
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from SYS_DEPT_USER
+    delete from sys_dept_user
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.six.system.domain.DeptUser">
-    insert into SYS_DEPT_USER (id, dept_id, user_id, 
+    insert into sys_dept_user (id, dept_id, user_id, 
       operate_ip, operate_id, operate_name, 
       operate_time)
     values (#{id,jdbcType=INTEGER}, #{deptId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
@@ -32,7 +32,7 @@
       #{operateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.six.system.domain.DeptUser">
-    insert into SYS_DEPT_USER
+    insert into sys_dept_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -81,7 +81,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.six.system.domain.DeptUser">
-    update SYS_DEPT_USER
+    update sys_dept_user
     <set>
       <if test="deptId != null">
         dept_id = #{deptId,jdbcType=INTEGER},
@@ -105,7 +105,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.six.system.domain.DeptUser">
-    update SYS_DEPT_USER
+    update sys_dept_user
     set dept_id = #{deptId,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=INTEGER},
       operate_ip = #{operateIp,jdbcType=VARCHAR},
@@ -114,4 +114,37 @@
       operate_time = #{operateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <!--*************************************************************-->
+  <select id="selectDeptKeysByUserId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    SELECT dept_id
+    FROM sys_dept_user
+    WHERE user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <select id="selectUserKeysByDeptId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    SELECT user_id
+    FROM sys_dept_user
+    WHERE dept_id = #{deptId,jdbcType=INTEGER}
+  </select>
+  <insert id="insertForeach">
+    INSERT INTO sys_dept_user
+    (dept_id, user_id, operate_ip, operate_id, operate_name, operate_time)
+    VALUES
+    <foreach collection ="deptKeys" item="key" separator =",">
+      (#{key,jdbcType=INTEGER}, #{user.id,jdbcType=INTEGER}, #{user.operateIp,jdbcType=VARCHAR},
+      #{user.operateId,jdbcType=INTEGER}, #{user.operateName,jdbcType=VARCHAR}, #{user.operateTime,jdbcType=TIMESTAMP})
+    </foreach >
+  </insert>
+  <delete id="deleteForeach">
+    DELETE FROM sys_dept_user
+    WHERE user_id = #{user.id,jdbcType=INTEGER}
+    AND dept_id in
+    <foreach collection ="deptKeys" item="key"  open="(" separator="," close=")">
+      #{key,jdbcType=INTEGER}
+    </foreach >
+  </delete>
+  <delete id="deleteByUserId" parameterType="java.lang.Integer">
+    DELETE FROM sys_dept_user
+    WHERE user_id = #{userId,jdbcType=INTEGER}
+  </delete>
 </mapper>

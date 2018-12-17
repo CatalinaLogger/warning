@@ -1,5 +1,6 @@
 package com.six.system.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.util.Date;
@@ -7,13 +8,13 @@ import java.util.Date;
 public class Role {
     private Integer id;
 
-    private String code;
-
     private String name;
 
     private Integer parentId;
 
     private Integer edit;
+
+    private Integer seq;
 
     private String operateIp;
 
@@ -22,4 +23,6 @@ public class Role {
     private String operateName;
 
     private Date operateTime;
+    @JsonIgnore
+    private Integer deptId;
 }

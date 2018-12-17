@@ -2,6 +2,9 @@ package com.six.system.dao;
 
 import com.six.system.domain.Dept;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 @Mapper
 public interface DeptMapper {
@@ -16,4 +19,11 @@ public interface DeptMapper {
     int updateByPrimaryKeySelective(Dept record);
 
     int updateByPrimaryKey(Dept record);
+
+    /********************************************/
+    List<Dept> selectAll();
+
+    List<Dept> selectByParentId(@Param("parentId") Integer parentId);
+
+    List<Dept> selectByUserId(@Param("userId")Integer userId);
 }

@@ -45,7 +45,26 @@ public interface IUserService {
      * @param page 分页条件
      * @return 用户列表
      */
-    PageData<User> selectPageByDeptId(Integer deptId, String query, PageParam page);
+    PageData<User> selectDeptPage(Integer deptId, String query, PageParam page);
+
+    /**
+     * 根据角色ID分页查询用户列表
+     * @param bound 是否是绑定了角色的用户
+     * @param roleId 角色ID
+     * @param query 查询条件（username, name, phone, mail）
+     * @param param 分页条件
+     * @return 用户列表
+     */
+    PageData<User> selectRolePage(Boolean bound, Integer roleId, String query, PageParam param);
+
+    /**
+     * 检查用户信息是否已存在
+     * @param userId 用户ID
+     * @param field 属性
+     * @param value 属性值
+     * @return 是否存在
+     */
+    boolean exists(Integer userId, String field, String value);
 
     /**
      * 新增用户
@@ -62,27 +81,25 @@ public interface IUserService {
     String update(UserParam param);
 
     /**
+     * 冻结用户
+     * @param userId 用户ID
+     * @return 成功提示语
+     */
+    String stop(Integer userId);
+
+    /**
+     * 解冻用户
+     * @param userId 用户ID
+     * @return 成功提示语
+     */
+    String start(Integer userId);
+
+    /**
      * 删除用户
      * @param userId
      * @return 成功提示语
      */
     String delete(Integer userId);
-
-    /**
-     * 批量删除用户
-     * @param ids 用户ID数组
-     * @return 成功提示语
-     */
-    String deleteBatch(List<Integer> ids);
-
-    /**
-     * 检查用户信息是否已存在
-     * @param userId 用户ID
-     * @param field 属性
-     * @param value 属性值
-     * @return 是否存在
-     */
-    boolean checkExist(Integer userId, String field, String value);
 
     /**
      * 用户登录
@@ -134,5 +151,4 @@ public interface IUserService {
      * @return 成功提示语
      */
     String avatar(MultipartFile file);
-
 }

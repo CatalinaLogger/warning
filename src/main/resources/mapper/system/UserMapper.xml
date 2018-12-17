@@ -11,17 +11,9 @@
     <result column="mail" jdbcType="VARCHAR" property="mail" />
     <result column="say" jdbcType="VARCHAR" property="say" />
     <result column="avatar" jdbcType="VARCHAR" property="avatar" />
-    <result column="we_chat" jdbcType="VARCHAR" property="weChat" />
-    <result column="qq" jdbcType="VARCHAR" property="qq" />
-    <result column="open_we" jdbcType="VARCHAR" property="openWe" />
-    <result column="open_qq" jdbcType="VARCHAR" property="openQq" />
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="reset_code" jdbcType="VARCHAR" property="resetCode" />
-    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
-    <result column="parent_name" jdbcType="VARCHAR" property="parentName" />
-    <result column="parent_username" jdbcType="VARCHAR" property="parentUsername" />
-    <result column="level" jdbcType="VARCHAR" property="level" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="operate_ip" jdbcType="VARCHAR" property="operateIp" />
@@ -33,49 +25,42 @@
     <result column="json_info" jdbcType="LONGVARCHAR" property="jsonInfo" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, nick_name, sex, birthday, phone, mail, say, avatar, we_chat, qq, open_we, 
-    open_qq, username, password, reset_code, parent_id, parent_name, parent_username, 
-    level, status, remark, operate_ip, operate_id, operate_name, operate_time
+    id, name, nick_name, sex, birthday, phone, mail, say, avatar, username, password,
+    reset_code, status, remark, operate_ip, operate_id, operate_name, operate_time
   </sql>
   <sql id="Blob_Column_List">
     json_info
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
-    select 
+    select
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from SYS_USER
+    from sys_user
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from SYS_USER
+    delete from sys_user
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.six.system.domain.User">
-    insert into SYS_USER (id, name, nick_name, 
-      sex, birthday, phone, 
-      mail, say, avatar, 
-      we_chat, qq, open_we, 
-      open_qq, username, password, 
-      reset_code, parent_id, parent_name, 
-      parent_username, level, status, 
-      remark, operate_ip, operate_id, 
-      operate_name, operate_time, json_info
-      )
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
-      #{sex,jdbcType=INTEGER}, #{birthday,jdbcType=DATE}, #{phone,jdbcType=VARCHAR}, 
-      #{mail,jdbcType=VARCHAR}, #{say,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, 
-      #{weChat,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{openWe,jdbcType=VARCHAR}, 
-      #{openQq,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{resetCode,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, #{parentName,jdbcType=VARCHAR}, 
-      #{parentUsername,jdbcType=VARCHAR}, #{level,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
-      #{remark,jdbcType=VARCHAR}, #{operateIp,jdbcType=VARCHAR}, #{operateId,jdbcType=INTEGER}, 
-      #{operateName,jdbcType=VARCHAR}, #{operateTime,jdbcType=TIMESTAMP}, #{jsonInfo,jdbcType=LONGVARCHAR}
-      )
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.six.system.domain.User">
+    insert into sys_user (id, name, nick_name,
+      sex, birthday, phone,
+      mail, say, avatar,
+      username, password, reset_code,
+      status, remark, operate_ip,
+      operate_id, operate_name, operate_time,
+      json_info)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR},
+      #{sex,jdbcType=INTEGER}, #{birthday,jdbcType=DATE}, #{phone,jdbcType=VARCHAR},
+      #{mail,jdbcType=VARCHAR}, #{say,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR},
+      #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{resetCode,jdbcType=VARCHAR},
+      #{status,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{operateIp,jdbcType=VARCHAR},
+      #{operateId,jdbcType=INTEGER}, #{operateName,jdbcType=VARCHAR}, #{operateTime,jdbcType=TIMESTAMP},
+      #{jsonInfo,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.six.system.domain.User">
-    insert into SYS_USER
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.six.system.domain.User">
+    insert into sys_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -104,18 +89,6 @@
       <if test="avatar != null">
         avatar,
       </if>
-      <if test="weChat != null">
-        we_chat,
-      </if>
-      <if test="qq != null">
-        qq,
-      </if>
-      <if test="openWe != null">
-        open_we,
-      </if>
-      <if test="openQq != null">
-        open_qq,
-      </if>
       <if test="username != null">
         username,
       </if>
@@ -124,18 +97,6 @@
       </if>
       <if test="resetCode != null">
         reset_code,
-      </if>
-      <if test="parentId != null">
-        parent_id,
-      </if>
-      <if test="parentName != null">
-        parent_name,
-      </if>
-      <if test="parentUsername != null">
-        parent_username,
-      </if>
-      <if test="level != null">
-        level,
       </if>
       <if test="status != null">
         status,
@@ -187,18 +148,6 @@
       <if test="avatar != null">
         #{avatar,jdbcType=VARCHAR},
       </if>
-      <if test="weChat != null">
-        #{weChat,jdbcType=VARCHAR},
-      </if>
-      <if test="qq != null">
-        #{qq,jdbcType=VARCHAR},
-      </if>
-      <if test="openWe != null">
-        #{openWe,jdbcType=VARCHAR},
-      </if>
-      <if test="openQq != null">
-        #{openQq,jdbcType=VARCHAR},
-      </if>
       <if test="username != null">
         #{username,jdbcType=VARCHAR},
       </if>
@@ -207,18 +156,6 @@
       </if>
       <if test="resetCode != null">
         #{resetCode,jdbcType=VARCHAR},
-      </if>
-      <if test="parentId != null">
-        #{parentId,jdbcType=INTEGER},
-      </if>
-      <if test="parentName != null">
-        #{parentName,jdbcType=VARCHAR},
-      </if>
-      <if test="parentUsername != null">
-        #{parentUsername,jdbcType=VARCHAR},
-      </if>
-      <if test="level != null">
-        #{level,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
         #{status,jdbcType=INTEGER},
@@ -244,7 +181,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.six.system.domain.User">
-    update SYS_USER
+    update sys_user
     <set>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
@@ -270,18 +207,6 @@
       <if test="avatar != null">
         avatar = #{avatar,jdbcType=VARCHAR},
       </if>
-      <if test="weChat != null">
-        we_chat = #{weChat,jdbcType=VARCHAR},
-      </if>
-      <if test="qq != null">
-        qq = #{qq,jdbcType=VARCHAR},
-      </if>
-      <if test="openWe != null">
-        open_we = #{openWe,jdbcType=VARCHAR},
-      </if>
-      <if test="openQq != null">
-        open_qq = #{openQq,jdbcType=VARCHAR},
-      </if>
       <if test="username != null">
         username = #{username,jdbcType=VARCHAR},
       </if>
@@ -290,18 +215,6 @@
       </if>
       <if test="resetCode != null">
         reset_code = #{resetCode,jdbcType=VARCHAR},
-      </if>
-      <if test="parentId != null">
-        parent_id = #{parentId,jdbcType=INTEGER},
-      </if>
-      <if test="parentName != null">
-        parent_name = #{parentName,jdbcType=VARCHAR},
-      </if>
-      <if test="parentUsername != null">
-        parent_username = #{parentUsername,jdbcType=VARCHAR},
-      </if>
-      <if test="level != null">
-        level = #{level,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
         status = #{status,jdbcType=INTEGER},
@@ -328,7 +241,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.six.system.domain.User">
-    update SYS_USER
+    update sys_user
     set name = #{name,jdbcType=VARCHAR},
       nick_name = #{nickName,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=INTEGER},
@@ -337,17 +250,9 @@
       mail = #{mail,jdbcType=VARCHAR},
       say = #{say,jdbcType=VARCHAR},
       avatar = #{avatar,jdbcType=VARCHAR},
-      we_chat = #{weChat,jdbcType=VARCHAR},
-      qq = #{qq,jdbcType=VARCHAR},
-      open_we = #{openWe,jdbcType=VARCHAR},
-      open_qq = #{openQq,jdbcType=VARCHAR},
       username = #{username,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       reset_code = #{resetCode,jdbcType=VARCHAR},
-      parent_id = #{parentId,jdbcType=INTEGER},
-      parent_name = #{parentName,jdbcType=VARCHAR},
-      parent_username = #{parentUsername,jdbcType=VARCHAR},
-      level = #{level,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
       remark = #{remark,jdbcType=VARCHAR},
       operate_ip = #{operateIp,jdbcType=VARCHAR},
@@ -358,7 +263,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.six.system.domain.User">
-    update SYS_USER
+    update sys_user
     set name = #{name,jdbcType=VARCHAR},
       nick_name = #{nickName,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=INTEGER},
@@ -367,17 +272,9 @@
       mail = #{mail,jdbcType=VARCHAR},
       say = #{say,jdbcType=VARCHAR},
       avatar = #{avatar,jdbcType=VARCHAR},
-      we_chat = #{weChat,jdbcType=VARCHAR},
-      qq = #{qq,jdbcType=VARCHAR},
-      open_we = #{openWe,jdbcType=VARCHAR},
-      open_qq = #{openQq,jdbcType=VARCHAR},
       username = #{username,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       reset_code = #{resetCode,jdbcType=VARCHAR},
-      parent_id = #{parentId,jdbcType=INTEGER},
-      parent_name = #{parentName,jdbcType=VARCHAR},
-      parent_username = #{parentUsername,jdbcType=VARCHAR},
-      level = #{level,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
       remark = #{remark,jdbcType=VARCHAR},
       operate_ip = #{operateIp,jdbcType=VARCHAR},
@@ -386,4 +283,121 @@
       operate_time = #{operateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <!--*****************************华丽的分割线************************************-->
+  <select id="selectByKeyword" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM sys_user
+    WHERE username = #{keyword,jdbcType=VARCHAR}
+    OR phone = #{keyword,jdbcType=VARCHAR}
+    OR mail = #{keyword,jdbcType=VARCHAR}
+  </select>
+  <select id="countAll" resultType="java.lang.Integer">
+    SELECT COUNT(id)
+    FROM sys_user
+    WHERE 1=1
+    <if test="query != null">
+      AND (
+        U.name LIKE CONCAT('%',#{query,jdbcType=VARCHAR},'%')
+        OR U.phone LIKE CONCAT('%',#{query,jdbcType=VARCHAR},'%')
+        OR U.mail LIKE CONCAT('%',#{query,jdbcType=VARCHAR},'%')
+      )
+    </if>
+  </select>
+  <select id="selectPageAll" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM sys_user
+    WHERE 1=1
+    <if test="query != null">
+      AND (
+        U.name LIKE CONCAT('%',#{query,jdbcType=VARCHAR},'%')
+        OR U.phone LIKE CONCAT('%',#{query,jdbcType=VARCHAR},'%')
+        OR U.mail LIKE CONCAT('%',#{query,jdbcType=VARCHAR},'%')
+      )
+    </if>
+    LIMIT #{page.offset,jdbcType=INTEGER}, #{page.size,jdbcType=INTEGER}
+  </select>
+  <select id="countByDeptId" resultType="java.lang.Integer">
+    SELECT COUNT(DU.user_id)
+    FROM sys_dept_user DU, sys_user U
+    WHERE DU.dept_id = #{deptId,jdbcType=INTEGER}
+    AND DU.user_id = U.id
+    <if test="query != null">
+      AND (
+        U.name LIKE CONCAT('%',#{query,jdbcType=VARCHAR},'%')
+        OR U.phone LIKE CONCAT('%',#{query,jdbcType=VARCHAR},'%')
+        OR U.mail LIKE CONCAT('%',#{query,jdbcType=VARCHAR},'%')
+      )
+    </if>
+  </select>
+  <select id="selectPageByDeptId" resultMap="BaseResultMap">
+    SELECT U.id, U.name, U.nick_name, U.sex, U.birthday, U.phone, U.mail, U.say, U.avatar, U.username,
+    U.status, U.remark, U.operate_ip, U.operate_id, U.operate_name, U.operate_time
+    FROM sys_dept_user DU, sys_user U
+    WHERE DU.dept_id = #{deptId,jdbcType=INTEGER}
+    AND DU.user_id = U.id
+    <if test="query != null">
+      AND (
+        U.name LIKE CONCAT('%',#{query,jdbcType=VARCHAR},'%')
+        OR U.phone LIKE CONCAT('%',#{query,jdbcType=VARCHAR},'%')
+        OR U.mail LIKE CONCAT('%',#{query,jdbcType=VARCHAR},'%')
+      )
+    </if>
+    LIMIT #{page.offset,jdbcType=INTEGER}, #{page.size,jdbcType=INTEGER}
+  </select>
+  <select id="countByRoleId" resultType="java.lang.Integer">
+    SELECT COUNT(RU.user_id)
+    FROM sys_role_user RU, sys_user U
+    WHERE RU.role_id = #{roleId,jdbcType=INTEGER}
+    AND RU.user_id = U.id
+    <if test="query != null">
+      AND (
+        U.name LIKE CONCAT('%',#{query,jdbcType=VARCHAR},'%')
+        OR U.phone LIKE CONCAT('%',#{query,jdbcType=VARCHAR},'%')
+        OR U.mail LIKE CONCAT('%',#{query,jdbcType=VARCHAR},'%')
+      )
+    </if>
+  </select>
+  <select id="selectPageByRoleId" resultMap="BaseResultMap">
+    SELECT U.id, U.name, U.nick_name, U.sex, U.birthday, U.phone, U.mail, U.say, U.avatar, U.username,
+    U.status, U.remark, U.operate_ip, U.operate_id, U.operate_name, U.operate_time
+    FROM sys_role_user RU, sys_user U
+    WHERE RU.role_id = #{roleId,jdbcType=INTEGER}
+    AND RU.user_id = U.id
+    <if test="query != null">
+      AND (
+        U.name LIKE CONCAT('%',#{query,jdbcType=VARCHAR},'%')
+        OR U.phone LIKE CONCAT('%',#{query,jdbcType=VARCHAR},'%')
+        OR U.mail LIKE CONCAT('%',#{query,jdbcType=VARCHAR},'%')
+      )
+    </if>
+    LIMIT #{page.offset,jdbcType=INTEGER}, #{page.size,jdbcType=INTEGER}
+  </select>
+  <select id="countUnRoleId" resultType="java.lang.Integer">
+    SELECT COUNT(1)
+    FROM sys_user U
+    WHERE NOT EXISTS(SELECT 1 FROM sys_role_user RU WHERE RU.user_id = U.id AND RU.role_id = #{roleId,jdbcType=INTEGER})
+    <if test="query != null">
+      AND (
+        U.name LIKE CONCAT('%',#{query,jdbcType=VARCHAR},'%')
+        OR U.phone LIKE CONCAT('%',#{query,jdbcType=VARCHAR},'%')
+        OR U.mail LIKE CONCAT('%',#{query,jdbcType=VARCHAR},'%')
+      )
+    </if>
+  </select>
+  <select id="selectPageUnRoleId" resultMap="BaseResultMap">
+    SELECT U.id, U.name, U.nick_name, U.sex, U.birthday, U.phone, U.mail, U.say, U.avatar, U.username,
+    U.status, U.remark, U.operate_ip, U.operate_id, U.operate_name, U.operate_time
+    FROM sys_user U
+    WHERE NOT EXISTS(SELECT 1 FROM sys_role_user RU WHERE RU.user_id = U.id AND RU.role_id = #{roleId,jdbcType=INTEGER})
+    <if test="query != null">
+      AND (
+        U.name LIKE CONCAT('%',#{query,jdbcType=VARCHAR},'%')
+        OR U.phone LIKE CONCAT('%',#{query,jdbcType=VARCHAR},'%')
+        OR U.mail LIKE CONCAT('%',#{query,jdbcType=VARCHAR},'%')
+      )
+    </if>
+    LIMIT #{page.offset,jdbcType=INTEGER}, #{page.size,jdbcType=INTEGER}
+  </select>
 </mapper>

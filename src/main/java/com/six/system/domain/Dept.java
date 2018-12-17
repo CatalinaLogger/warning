@@ -1,8 +1,10 @@
 package com.six.system.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class Dept {
@@ -25,4 +27,8 @@ public class Dept {
     private String operateName;
 
     private Date operateTime;
+
+    private List<User> lead;
+    @JsonIgnore
+    private Integer userId;
 }

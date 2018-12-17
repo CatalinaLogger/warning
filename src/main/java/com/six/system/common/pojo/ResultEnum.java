@@ -8,6 +8,7 @@ package com.six.system.common.pojo;
 public enum ResultEnum {
 
     EXCEPTION(-100, "未知异常"),
+    ERROR_DATA_BASE(-20, "数据库操作失败"),
     ERROR_ACCESS(-10, "验证身份失败"),
     ERROR_PARAM(-2, "请求参数异常"),
     ERROR(-1, "请求失败" ),

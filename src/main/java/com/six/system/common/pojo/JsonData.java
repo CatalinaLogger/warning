@@ -33,6 +33,13 @@ public class JsonData {
         return jd;
     }
 
+    public static JsonData successOperate(String msg) {
+        JsonData jd = new JsonData();
+        jd.code = ResultEnum.SUCCESS_OPERATE.getCode();
+        jd.msg = msg;
+        return jd;
+    }
+
     public static JsonData success(Object obj) {
         JsonData jd = new JsonData();
         jd.code = ResultEnum.SUCCESS.getCode();

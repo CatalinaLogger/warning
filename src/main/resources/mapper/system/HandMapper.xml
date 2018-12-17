@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.six.system.dao.HandMapper">
+  <resultMap id="UserResultMap" type="com.six.system.domain.User">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="mail" jdbcType="VARCHAR" property="mail" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="dept_id" jdbcType="INTEGER" property="deptId" />
+  </resultMap>
+  <select id="selectLeadAll" resultMap="UserResultMap">
+    SELECT
+    U.id, U.name, U.sex, U.phone, U.mail, U.username, U.status, U.remark, RU.dept_id
+    FROM sys_role_user RU, sys_user U
+    WHERE RU.role_id = #{roleId,jdbcType=INTEGER}
+    AND RU.user_id = U.id
+  </select>
+
+  <resultMap id="DeptResultMap" type="com.six.system.domain.Dept">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="level" jdbcType="VARCHAR" property="level" />
+    <result column="seq" jdbcType="INTEGER" property="seq" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="operate_ip" jdbcType="VARCHAR" property="operateIp" />
+    <result column="operate_id" jdbcType="INTEGER" property="operateId" />
+    <result column="operate_name" jdbcType="VARCHAR" property="operateName" />
+    <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+  </resultMap>
+  <select id="selectDeptAllOfUser" resultMap="DeptResultMap">
+    SELECT
+    D.id, D.name, D.parent_id, D.level, D.seq, D.remark, D.operate_ip, D.operate_id, D.operate_name, D.operate_time, DU.user_id
+    FROM sys_dept D, sys_dept_user DU
+    WHERE  D.id = DU.dept_id
+  </select>
+</mapper>

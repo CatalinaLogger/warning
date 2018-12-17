@@ -3,46 +3,43 @@
 <mapper namespace="com.six.system.dao.RoleMapper">
   <resultMap id="BaseResultMap" type="com.six.system.domain.Role">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="code" jdbcType="VARCHAR" property="code" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="parent_id" jdbcType="INTEGER" property="parentId" />
     <result column="edit" jdbcType="INTEGER" property="edit" />
+    <result column="seq" jdbcType="INTEGER" property="seq" />
     <result column="operate_ip" jdbcType="VARCHAR" property="operateIp" />
     <result column="operate_id" jdbcType="INTEGER" property="operateId" />
     <result column="operate_name" jdbcType="VARCHAR" property="operateName" />
     <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, code, name, parent_id, edit, operate_ip, operate_id, operate_name, operate_time
+    id, name, parent_id, edit, seq, operate_ip, operate_id, operate_name, operate_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
-    from SYS_ROLE
+    from sys_role
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from SYS_ROLE
+    delete from sys_role
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.six.system.domain.Role">
-    insert into SYS_ROLE (id, code, name, 
-      parent_id, edit, operate_ip, 
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.six.system.domain.Role">
+    insert into sys_role (id, name, parent_id,
+      edit, seq, operate_ip,
       operate_id, operate_name, operate_time
       )
-    values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{parentId,jdbcType=INTEGER}, #{edit,jdbcType=INTEGER}, #{operateIp,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER},
+      #{edit,jdbcType=INTEGER}, #{seq,jdbcType=INTEGER}, #{operateIp,jdbcType=VARCHAR},
       #{operateId,jdbcType=INTEGER}, #{operateName,jdbcType=VARCHAR}, #{operateTime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.six.system.domain.Role">
-    insert into SYS_ROLE
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.six.system.domain.Role">
+    insert into sys_role
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
-      </if>
-      <if test="code != null">
-        code,
       </if>
       <if test="name != null">
         name,
@@ -52,6 +49,9 @@
       </if>
       <if test="edit != null">
         edit,
+      </if>
+      <if test="seq != null">
+        seq,
       </if>
       <if test="operateIp != null">
         operate_ip,
@@ -70,9 +70,6 @@
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="code != null">
-        #{code,jdbcType=VARCHAR},
-      </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
@@ -81,6 +78,9 @@
       </if>
       <if test="edit != null">
         #{edit,jdbcType=INTEGER},
+      </if>
+      <if test="seq != null">
+        #{seq,jdbcType=INTEGER},
       </if>
       <if test="operateIp != null">
         #{operateIp,jdbcType=VARCHAR},
@@ -97,11 +97,8 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.six.system.domain.Role">
-    update SYS_ROLE
+    update sys_role
     <set>
-      <if test="code != null">
-        code = #{code,jdbcType=VARCHAR},
-      </if>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
@@ -110,6 +107,9 @@
       </if>
       <if test="edit != null">
         edit = #{edit,jdbcType=INTEGER},
+      </if>
+      <if test="seq != null">
+        seq = #{seq,jdbcType=INTEGER},
       </if>
       <if test="operateIp != null">
         operate_ip = #{operateIp,jdbcType=VARCHAR},
@@ -127,15 +127,36 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.six.system.domain.Role">
-    update SYS_ROLE
-    set code = #{code,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
+    update sys_role
+    set name = #{name,jdbcType=VARCHAR},
       parent_id = #{parentId,jdbcType=INTEGER},
       edit = #{edit,jdbcType=INTEGER},
+      seq = #{seq,jdbcType=INTEGER},
       operate_ip = #{operateIp,jdbcType=VARCHAR},
       operate_id = #{operateId,jdbcType=INTEGER},
       operate_name = #{operateName,jdbcType=VARCHAR},
       operate_time = #{operateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <!--*********************************************-->
+  <select id="selectAll" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM sys_role
+  </select>
+  <select id="selectByParentId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM sys_role
+    WHERE parent_id = #{parentId,jdbcType=INTEGER}
+    ORDER BY seq ASC
+  </select>
+  <select id="selectByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT
+    R.id, R.name
+    FROM sys_role_user RU, sys_role R
+    WHERE RU.user_id = #{userId,jdbcType=INTEGER}
+    AND RU.role_id = R.id
+  </select>
 </mapper>

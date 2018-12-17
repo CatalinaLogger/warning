@@ -4,35 +4,35 @@
   <resultMap id="BaseResultMap" type="com.six.system.domain.RoleAuth">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="role_id" jdbcType="INTEGER" property="roleId" />
-    <result column="menu_id" jdbcType="INTEGER" property="menuId" />
+    <result column="auth_id" jdbcType="INTEGER" property="authId" />
     <result column="operate_ip" jdbcType="VARCHAR" property="operateIp" />
     <result column="operate_id" jdbcType="INTEGER" property="operateId" />
     <result column="operate_name" jdbcType="VARCHAR" property="operateName" />
     <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, role_id, menu_id, operate_ip, operate_id, operate_name, operate_time
+    id, role_id, auth_id, operate_ip, operate_id, operate_name, operate_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
-    from SYS_ROLE_AUTH
+    from sys_role_auth
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from SYS_ROLE_AUTH
+    delete from sys_role_auth
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.six.system.domain.RoleAuth">
-    insert into SYS_ROLE_AUTH (id, role_id, menu_id, 
-      operate_ip, operate_id, operate_name, 
+    insert into sys_role_auth (id, role_id, auth_id,
+      operate_ip, operate_id, operate_name,
       operate_time)
-    values (#{id,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, #{menuId,jdbcType=INTEGER}, 
-      #{operateIp,jdbcType=VARCHAR}, #{operateId,jdbcType=INTEGER}, #{operateName,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, #{authId,jdbcType=INTEGER},
+      #{operateIp,jdbcType=VARCHAR}, #{operateId,jdbcType=INTEGER}, #{operateName,jdbcType=VARCHAR},
       #{operateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.six.system.domain.RoleAuth">
-    insert into SYS_ROLE_AUTH
+    insert into sys_role_auth
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -40,8 +40,8 @@
       <if test="roleId != null">
         role_id,
       </if>
-      <if test="menuId != null">
-        menu_id,
+      <if test="authId != null">
+        auth_id,
       </if>
       <if test="operateIp != null">
         operate_ip,
@@ -63,8 +63,8 @@
       <if test="roleId != null">
         #{roleId,jdbcType=INTEGER},
       </if>
-      <if test="menuId != null">
-        #{menuId,jdbcType=INTEGER},
+      <if test="authId != null">
+        #{authId,jdbcType=INTEGER},
       </if>
       <if test="operateIp != null">
         #{operateIp,jdbcType=VARCHAR},
@@ -81,13 +81,13 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.six.system.domain.RoleAuth">
-    update SYS_ROLE_AUTH
+    update sys_role_auth
     <set>
       <if test="roleId != null">
         role_id = #{roleId,jdbcType=INTEGER},
       </if>
-      <if test="menuId != null">
-        menu_id = #{menuId,jdbcType=INTEGER},
+      <if test="authId != null">
+        auth_id = #{authId,jdbcType=INTEGER},
       </if>
       <if test="operateIp != null">
         operate_ip = #{operateIp,jdbcType=VARCHAR},
@@ -105,13 +105,41 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.six.system.domain.RoleAuth">
-    update SYS_ROLE_AUTH
+    update sys_role_auth
     set role_id = #{roleId,jdbcType=INTEGER},
-      menu_id = #{menuId,jdbcType=INTEGER},
+      auth_id = #{authId,jdbcType=INTEGER},
       operate_ip = #{operateIp,jdbcType=VARCHAR},
       operate_id = #{operateId,jdbcType=INTEGER},
       operate_name = #{operateName,jdbcType=VARCHAR},
       operate_time = #{operateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <!--*******************************************************************-->
+  <select id="selectAuthKeysByRoleId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    SELECT auth_id
+    FROM sys_role_auth
+    WHERE role_id = #{roleId,jdbcType=INTEGER}
+  </select>
+  <insert id="insertForeach">
+    INSERT INTO sys_role_auth
+    (role_id, auth_id, operate_ip, operate_id, operate_name, operate_time)
+    VALUES
+    <foreach collection ="authKeys" item="key" separator =",">
+      (#{role.id,jdbcType=INTEGER}, #{key,jdbcType=INTEGER}, #{role.operateIp,jdbcType=VARCHAR},
+      #{role.operateId,jdbcType=INTEGER}, #{role.operateName,jdbcType=VARCHAR}, #{role.operateTime,jdbcType=TIMESTAMP})
+    </foreach >
+  </insert>
+  <delete id="deleteForeach">
+    DELETE FROM sys_role_auth
+    WHERE role_id = #{role.id,jdbcType=INTEGER}
+    AND auth_id IN
+    <foreach collection ="authKeys" item="key"  open="(" separator="," close=")">
+      #{key,jdbcType=INTEGER}
+    </foreach >
+  </delete>
+  <delete id="deleteByAuthId" parameterType="java.lang.Integer">
+    DELETE FROM sys_role_auth
+    WHERE auth_id = #{authId,jdbcType=INTEGER}
+  </delete>
 </mapper>
