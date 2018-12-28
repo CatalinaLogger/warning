@@ -75,6 +75,13 @@ public class UserController {
         return JsonData.successOperate(userService.update(param));
     }
 
+    @ApiOperation("修改密码")
+    @PutMapping("/password/update")
+    public JsonData updatePassword(@ApiParam(value = "原始密码", required = true) @RequestParam String oldPassword,
+                                   @ApiParam(value = "新的密码", required = true) @RequestParam String newPassword) {
+        return JsonData.successOperate(userService.updatePassword(oldPassword, newPassword));
+    }
+
     @ApiOperation("冻结用户")
     @PutMapping("/stop")
     public JsonData stop(@ApiParam(value = "用户ID", example = "1", required = true)  @RequestParam("userId") Integer userId) {
@@ -91,5 +98,11 @@ public class UserController {
     @DeleteMapping("/delete")
     public JsonData delete(@ApiParam(value = "用户ID", required = true) @RequestParam("userId") Integer userId) {
         return JsonData.successOperate(userService.delete(userId));
+    }
+
+    @ApiOperation("用户登出")
+    @PostMapping("/logout")
+    public JsonData logout() {
+        return JsonData.success(userService.logout());
     }
 }

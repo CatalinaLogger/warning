@@ -281,7 +281,10 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public String logout() {
-        return null;
+        LoginUser user = SessionLocal.getUser();
+        String loginKey = RedisKey.LOGINKEY + user.getOperateIp() + ":" + user.getId();
+        clearUserCache(loginKey);
+        return "退出成功";
     }
 
     @Override
@@ -319,7 +322,17 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public String updatePassword(String oldPassword, String newPassword) {
-        return null;
+        User user = userMapper.selectByPrimaryKey(SessionLocal.getUser().getId());
+        if (ObjectUtils.isEmpty(user)) {
+            throw new SixException(ResultEnum.ERROR_PARAM.getCode(), "未找到相匹配的记录");
+        }
+        if (user.getPassword().equals(MD5Util.encrypt(oldPassword))) {
+            user.setPassword(MD5Util.encrypt(newPassword));
+            userMapper.updateByPrimaryKey(user);
+        } else {
+            throw new SixException(ResultEnum.ERROR_PARAM.getCode(), "验证失败，原始密码错误");
+        }
+        return "修改密码成功";
     }
 
     @Override
