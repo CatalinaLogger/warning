@@ -36,8 +36,8 @@ public class UserController {
     @ApiOperation("根据部门分页获取用户列表")
     @GetMapping("/dept/select/page")
     public JsonData selectDept(@ApiParam(value = "部门ID", example = "1") @RequestParam(value = "deptId", defaultValue = "") Integer deptId,
-                           @ApiParam("查询条件") @RequestParam(value = "query", required = false) String query,
-                           @Valid PageParam param, BindingResult bindingResult) {
+                               @ApiParam("查询条件") @RequestParam(value = "query", required = false) String query,
+                               @Valid PageParam param, BindingResult bindingResult) {
         query = ObjectUtils.isEmpty(query) ? null : query;
         PageData<User> page = userService.selectDeptPage(deptId, query, param);
         return JsonData.success(page);

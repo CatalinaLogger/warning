@@ -170,4 +170,11 @@
     WHERE DU.user_id = #{userId,jdbcType=INTEGER}
     AND DU.dept_id = D.id
   </select>
+  <select id="selectChildByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT
+    D.id, D.name, D.parent_id, D.level, D.seq, D.remark, D.operate_ip, D.operate_id, D.operate_name, D.operate_time
+    FROM sys_dept_user DU, sys_dept D
+    WHERE DU.user_id = #{userId,jdbcType=INTEGER}
+    AND D.level LIKE CONCAT('%', DU.dept_id,'.%')
+  </select>
 </mapper>

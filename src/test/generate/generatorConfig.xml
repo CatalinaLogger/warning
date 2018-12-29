@@ -14,29 +14,47 @@
 			<property name="forceBigDecimals" value="false" />
 		</javaTypeResolver>
 
-		<!-- 生成模型的包名和位置 --> <!-- 3 -->
+<!--
+		&lt;!&ndash; 生成模型的包名和位置 &ndash;&gt; &lt;!&ndash; 3 &ndash;&gt;
 		<javaModelGenerator targetPackage="com.six.system.domain" targetProject="./target">
 			<property name="enableSubPackages" value="true" />
 			<property name="trimStrings" value="true" />
 		</javaModelGenerator>
-		<!-- 生成的映射文件包名和位置 --> <!-- 4 -->
+		&lt;!&ndash; 生成的映射文件包名和位置 &ndash;&gt; &lt;!&ndash; 4 &ndash;&gt;
 		<sqlMapGenerator targetPackage="mapper.system" targetProject="./target">
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
-		<!-- 生成DAO的包名和位置 --> <!-- 5 -->
+		&lt;!&ndash; 生成DAO的包名和位置 &ndash;&gt; &lt;!&ndash; 5 &ndash;&gt;
 		<javaClientGenerator type="XMLMAPPER" targetPackage="com.six.system.dao" targetProject="./target">
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
-		<!-- 要生成那些表(更改tableName和domainObjectName就可以) --><!-- 6 -->
+		&lt;!&ndash; 要生成那些表(更改tableName和domainObjectName就可以) &ndash;&gt;&lt;!&ndash; 6 &ndash;&gt;
 		<table tableName="sys_auth" domainObjectName="Auth" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
 		<table tableName="sys_dept" domainObjectName="Dept" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
-		<table tableName="sys_dept_lead" domainObjectName="DeptLead" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
 		<table tableName="sys_dept_user" domainObjectName="DeptUser" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
 		<table tableName="sys_role" domainObjectName="Role" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
 		<table tableName="sys_role_auth" domainObjectName="RoleAuth" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
 		<table tableName="sys_role_user" domainObjectName="RoleUser" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
 		<table tableName="sys_user" domainObjectName="User" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
 		<table tableName="sys_user_login" domainObjectName="UserLogin" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
+-->
+
+
+		<!-- 生成模型的包名和位置 --> <!-- 3 -->
+		<javaModelGenerator targetPackage="com.six.datum.domain" targetProject="./target">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+		<!-- 生成的映射文件包名和位置 --> <!-- 4 -->
+		<sqlMapGenerator targetPackage="mapper.datum" targetProject="./target">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+		<!-- 生成DAO的包名和位置 --> <!-- 5 -->
+		<javaClientGenerator type="XMLMAPPER" targetPackage="com.six.datum.dao" targetProject="./target">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+		<!-- 要生成那些表(更改tableName和domainObjectName就可以) --><!-- 6 -->
+		<table tableName="dat_point" domainObjectName="Point" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
 
 	</context>
 </generatorConfiguration>

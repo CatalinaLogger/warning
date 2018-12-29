@@ -6,6 +6,7 @@ import com.six.system.common.pojo.DeptNode;
 import com.six.system.common.pojo.ResultEnum;
 import com.six.system.common.pojo.SixConfig;
 import com.six.system.common.utils.LevelUtil;
+import com.six.system.common.utils.SessionLocal;
 import com.six.system.common.utils.SixUtil;
 import com.six.system.dao.*;
 import com.six.system.domain.Dept;
@@ -65,9 +66,17 @@ public class DeptServiceImpl implements IDeptService {
     }
 
     @Override
-    public List<Dept> selectByUserId(Integer userId) {
-        return deptMapper.selectByUserId(userId);
+    public List<Dept> selectByUserId(Integer userId, Boolean child) {
+        if (ObjectUtils.isEmpty(userId)) {
+            userId = SessionLocal.getUser().getId();
+        }
+        List<Dept> deptList = deptMapper.selectByUserId(userId);
+        if (child) {
+            deptList.addAll(deptMapper.selectChildByUserId(userId));
+        }
+        return deptList;
     }
+
 
     @Override
     public String insert(DeptParam param) {

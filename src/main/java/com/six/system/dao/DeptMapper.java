@@ -25,5 +25,7 @@ public interface DeptMapper {
 
     List<Dept> selectByParentId(@Param("parentId") Integer parentId);
 
-    List<Dept> selectByUserId(@Param("userId")Integer userId);
+    List<Dept> selectByUserId(@Param("userId") Integer userId);
+
+    List<Dept> selectChildByUserId(@Param("userId") Integer userId);
 }

@@ -32,8 +32,9 @@ public class DeptController {
 
     @ApiOperation("获取用户区域列表")
     @GetMapping("/select/list")
-    public JsonData selectDeptList(@ApiParam(value = "用户ID", required = true) @RequestParam("userId") Integer userId) {
-        return JsonData.success(deptService.selectByUserId(userId));
+    public JsonData selectDeptList(@ApiParam(value = "用户ID：不传查询当前用户") @RequestParam(value = "userId", required = false) Integer userId,
+                                   @ApiParam(value = "是否包含子区域：默认不包含") @RequestParam(value = "child", defaultValue = "false") Boolean child) {
+        return JsonData.success(deptService.selectByUserId(userId, child));
     }
 
     @ApiOperation("新增区域")
