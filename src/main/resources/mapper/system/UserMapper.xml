@@ -293,7 +293,7 @@
     OR mail = #{keyword,jdbcType=VARCHAR}
   </select>
   <select id="countAll" resultType="java.lang.Integer">
-    SELECT COUNT(id)
+    SELECT COUNT(1)
     FROM sys_user
     WHERE 1=1
     <if test="query != null">
@@ -319,7 +319,7 @@
     LIMIT #{page.offset,jdbcType=INTEGER}, #{page.size,jdbcType=INTEGER}
   </select>
   <select id="countByDeptId" resultType="java.lang.Integer">
-    SELECT COUNT(DU.user_id)
+    SELECT COUNT(1)
     FROM sys_dept_user DU, sys_user U
     WHERE DU.dept_id = #{deptId,jdbcType=INTEGER}
     AND DU.user_id = U.id
@@ -347,7 +347,7 @@
     LIMIT #{page.offset,jdbcType=INTEGER}, #{page.size,jdbcType=INTEGER}
   </select>
   <select id="countByRoleId" resultType="java.lang.Integer">
-    SELECT COUNT(RU.user_id)
+    SELECT COUNT(1)
     FROM sys_role_user RU, sys_user U
     WHERE RU.role_id = #{roleId,jdbcType=INTEGER}
     AND RU.user_id = U.id

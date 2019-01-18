@@ -7,11 +7,9 @@ import com.six.system.domain.Auth;
 import java.util.List;
 
 public interface IAuthService {
-    List<AuthNode> selectTree();
+    List<AuthNode> selectTree(Integer userId);
 
-    List<AuthNode> selectTreeByUserId(Integer userId);
-
-    List<Auth>  selectByRoleId(Integer roleId);
+    List<Auth> selectList(Integer roleId);
 
     String insert(AuthParam param);
 

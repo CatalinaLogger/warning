@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.six.datum.dao.PointPhotoMapper">
+  <resultMap id="BaseResultMap" type="com.six.datum.domain.PointPhoto">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="picture_path" jdbcType="VARCHAR" property="url" />
+    <result column="info_pois_id" jdbcType="INTEGER" property="pointId" />
+    <result column="operate_ip" jdbcType="VARCHAR" property="operateIp" />
+    <result column="operate_id" jdbcType="INTEGER" property="operateId" />
+    <result column="operate_name" jdbcType="VARCHAR" property="operateName" />
+    <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, picture_path, info_pois_id, operate_ip, operate_id, operate_name, operate_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from path_poi_picture
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from path_poi_picture
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.six.datum.domain.PointPhoto">
+    insert into path_poi_picture (id, picture_path, info_pois_id, 
+      operate_ip, operate_id, operate_name, 
+      operate_time)
+    values (#{id,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{pointId,jdbcType=INTEGER}, 
+      #{operateIp,jdbcType=VARCHAR}, #{operateId,jdbcType=INTEGER}, #{operateName,jdbcType=VARCHAR}, 
+      #{operateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.six.datum.domain.PointPhoto">
+    insert into path_poi_picture
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="picturePath != null">
+        picture_path,
+      </if>
+      <if test="infoPoisId != null">
+        info_pois_id,
+      </if>
+      <if test="operateIp != null">
+        operate_ip,
+      </if>
+      <if test="operateId != null">
+        operate_id,
+      </if>
+      <if test="operateName != null">
+        operate_name,
+      </if>
+      <if test="operateTime != null">
+        operate_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="picturePath != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="infoPoisId != null">
+        #{pointId,jdbcType=INTEGER},
+      </if>
+      <if test="operateIp != null">
+        #{operateIp,jdbcType=VARCHAR},
+      </if>
+      <if test="operateId != null">
+        #{operateId,jdbcType=INTEGER},
+      </if>
+      <if test="operateName != null">
+        #{operateName,jdbcType=VARCHAR},
+      </if>
+      <if test="operateTime != null">
+        #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.six.datum.domain.PointPhoto">
+    update path_poi_picture
+    <set>
+      <if test="picturePath != null">
+        picture_path = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="infoPoisId != null">
+        info_pois_id = #{pointId,jdbcType=INTEGER},
+      </if>
+      <if test="operateIp != null">
+        operate_ip = #{operateIp,jdbcType=VARCHAR},
+      </if>
+      <if test="operateId != null">
+        operate_id = #{operateId,jdbcType=INTEGER},
+      </if>
+      <if test="operateName != null">
+        operate_name = #{operateName,jdbcType=VARCHAR},
+      </if>
+      <if test="operateTime != null">
+        operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.six.datum.domain.PointPhoto">
+    update path_poi_picture
+    set picture_path = #{url,jdbcType=VARCHAR},
+      info_pois_id = #{pointId,jdbcType=INTEGER},
+      operate_ip = #{operateIp,jdbcType=VARCHAR},
+      operate_id = #{operateId,jdbcType=INTEGER},
+      operate_name = #{operateName,jdbcType=VARCHAR},
+      operate_time = #{operateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!--*************************************************************************************-->
+  <select id="selectByPointId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM path_poi_picture
+    WHERE info_pois_id = #{pointId,jdbcType=INTEGER}
+  </select>
+</mapper>

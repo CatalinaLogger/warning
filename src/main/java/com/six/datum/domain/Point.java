@@ -37,4 +37,8 @@ public class Point {
     private Date operateTime;
 
     private String jsonInfo;
+
+    private Integer level;
+
+    private Date time;
 }

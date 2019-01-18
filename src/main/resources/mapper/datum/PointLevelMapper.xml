@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.six.datum.dao.PointLevelMapper">
+  <resultMap id="BaseResultMap" type="com.six.datum.domain.PointLevel">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="info_pois_id" jdbcType="INTEGER" property="pointId" />
+    <result column="warn_level_id" jdbcType="INTEGER" property="level" />
+    <result column="operater" jdbcType="VARCHAR" property="operateName" />
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
+    <result column="confirm" jdbcType="INTEGER" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, info_pois_id, warn_level_id, operater, time, confirm
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from warn_result
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from warn_result
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.six.datum.domain.PointLevel">
+    insert into warn_result (id, info_pois_id, warn_level_id, 
+      operater, time, confirm
+      )
+    values (#{id,jdbcType=INTEGER}, #{pointId,jdbcType=INTEGER}, #{level,jdbcType=INTEGER}, 
+      #{operateName,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.six.datum.domain.PointLevel">
+    insert into warn_result
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="infoPoisId != null">
+        info_pois_id,
+      </if>
+      <if test="warnLevelId != null">
+        warn_level_id,
+      </if>
+      <if test="operater != null">
+        operater,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+      <if test="confirm != null">
+        confirm,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="infoPoisId != null">
+        #{pointId,jdbcType=INTEGER},
+      </if>
+      <if test="warnLevelId != null">
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="operater != null">
+        #{operateName,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="confirm != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.six.datum.domain.PointLevel">
+    update warn_result
+    <set>
+      <if test="infoPoisId != null">
+        info_pois_id = #{pointId,jdbcType=INTEGER},
+      </if>
+      <if test="warnLevelId != null">
+        warn_level_id = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="operater != null">
+        operater = #{operateName,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="confirm != null">
+        confirm = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.six.datum.domain.PointLevel">
+    update warn_result
+    set info_pois_id = #{pointId,jdbcType=INTEGER},
+      warn_level_id = #{level,jdbcType=INTEGER},
+      operater = #{operateName,jdbcType=VARCHAR},
+      time = #{time,jdbcType=TIMESTAMP},
+      confirm = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!--*****************************华丽的分割线************************************-->
+  <select id="selectByPointId" resultMap="BaseResultMap">
+    SELECT
+    warn_level_id, time
+    FROM warn_result
+    WHERE info_pois_id = #{pointId,jdbcType=INTEGER}
+    AND confirm = 1
+    ORDER BY id DESC
+    LIMIT 1
+  </select>
+  <select id="selectByPointIdAndTime" resultMap="BaseResultMap">
+    SELECT
+    warn_level_id, time
+    FROM warn_result
+    WHERE info_pois_id = #{pointId,jdbcType=INTEGER}
+    AND confirm = 1
+    AND time BETWEEN #{start,jdbcType=VARCHAR} AND #{end,jdbcType=VARCHAR}
+    LIMIT #{page,jdbcType=INTEGER}, #{size,jdbcType=INTEGER}
+  </select>
+</mapper>

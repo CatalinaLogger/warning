@@ -60,27 +60,8 @@ public class UserServiceImpl implements IUserService {
     private RedisTemplate<String, LoginUser> redisTemplate;
 
     @Override
-    public User select() {
-        return null;
-    }
-
-    @Override
-    public List<User> selectByName(String name) {
-        return null;
-    }
-
-    @Override
-    public User selectByUsername(String username) {
-        return null;
-    }
-
-    @Override
-    public List<User> selectByRoleCode(String roleCode) {
-        return null;
-    }
-
-    @Override
-    public PageData<User> selectDeptPage(Integer deptId, String query, PageParam page) {
+    public PageData<User> selectPageDept(Integer deptId, String query, PageParam page) {
+        query = ObjectUtils.isEmpty(query) ? null : query;
         if (ObjectUtils.isEmpty(deptId)) {
             int total = userMapper.countAll();
             List<User> list = userMapper.selectPageAll(query, page);
@@ -94,7 +75,8 @@ public class UserServiceImpl implements IUserService {
 
     // TODO deptService.setDeptOfUser() 当用户量较大时待优化
     @Override
-    public PageData<User> selectRolePage(Boolean bound, Integer roleId, String query, PageParam page) {
+    public PageData<User> selectPageRole(Boolean bound, Integer roleId, String query, PageParam page) {
+        query = ObjectUtils.isEmpty(query) ? null : query;
         if (bound) {
             int total = userMapper.countByRoleId(roleId, query);
             List<User> list = userMapper.selectPageByRoleId(roleId, query, page);
@@ -301,8 +283,7 @@ public class UserServiceImpl implements IUserService {
                 loginInfo.setAvatar(sixConfig.getFastUrl() + avatar);
             }
             loginInfo.setRole(roleMapper.selectByUserId(user.getId()));
-            // loginInfo.setAuth(authService.selectTree());
-            loginInfo.setAuth(authService.selectTreeByUserId(user.getId()));
+            loginInfo.setAuth(authService.selectTree(user.getId()));
             return loginInfo;
         } catch (Exception e) {
             e.printStackTrace();
@@ -312,11 +293,6 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public String refreshToken(Integer userId) {
-        return null;
-    }
-
-    @Override
-    public String resetPassword(String mail, String code) {
         return null;
     }
 

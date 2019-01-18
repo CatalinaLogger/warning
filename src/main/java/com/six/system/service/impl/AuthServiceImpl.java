@@ -32,17 +32,15 @@ public class AuthServiceImpl implements IAuthService {
     private ToolMapper toolMapper;
 
     @Override
-    public List<AuthNode> selectTree() {
-        return handelAuthTree(authMapper.selectAll());
-    }
-
-    @Override
-    public List<AuthNode> selectTreeByUserId(Integer userId) {
+    public List<AuthNode> selectTree(Integer userId) {
+        if (ObjectUtils.isEmpty(userId)) {
+            return handelAuthTree(authMapper.selectAll());
+        }
         return handelAuthTree(authMapper.selectByUserId(userId));
     }
 
     @Override
-    public List<Auth> selectByRoleId(Integer roleId) {
+    public List<Auth> selectList(Integer roleId) {
         return authMapper.selectByRoleId(roleId);
     }
 

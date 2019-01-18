@@ -66,7 +66,7 @@ public class DeptServiceImpl implements IDeptService {
     }
 
     @Override
-    public List<Dept> selectByUserId(Integer userId, Boolean child) {
+    public List<Dept> selectList(Integer userId, Boolean child) {
         if (ObjectUtils.isEmpty(userId)) {
             userId = SessionLocal.getUser().getId();
         }

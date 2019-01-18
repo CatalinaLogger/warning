@@ -12,7 +12,7 @@ import lombok.Data;
 @ApiModel(description = "统一数据返回格式")
 @Data
 public class JsonData {
-    @ApiModelProperty(notes = "状态码")
+    @ApiModelProperty(notes = "状态码: 0 正常返回")
     private Integer code;
     @ApiModelProperty(notes = "提示消息")
     private String msg;

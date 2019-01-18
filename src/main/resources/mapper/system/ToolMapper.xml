@@ -4,7 +4,7 @@
 
     <select id="existSize" resultType="java.lang.Integer">
         SELECT
-          count(1)
+          COUNT(1)
         FROM  ${tableName}
         WHERE 1=1
         <if test="parentId != null">

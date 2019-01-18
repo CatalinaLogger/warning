@@ -3,27 +3,30 @@
 <mapper namespace="com.six.datum.dao.PointMapper">
   <resultMap id="BaseResultMap" type="com.six.datum.domain.Point">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="dept_id" jdbcType="INTEGER" property="deptId" />
-    <result column="dept_name" jdbcType="VARCHAR" property="deptName" />
-    <result column="type_id" jdbcType="INTEGER" property="typeId" />
-    <result column="type_name" jdbcType="VARCHAR" property="typeName" />
+    <result column="sys_dept_id" jdbcType="INTEGER" property="deptId" />
+    <result column="sys_dept_name" jdbcType="VARCHAR" property="deptName" />
+    <result column="type_poi_id" jdbcType="INTEGER" property="typeId" />
+    <result column="type_poi_name" jdbcType="VARCHAR" property="typeName" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="preview" jdbcType="VARCHAR" property="preview" />
-    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="preview_path" jdbcType="VARCHAR" property="preview" />
+    <result column="location" jdbcType="VARCHAR" property="address" />
     <result column="summary" jdbcType="VARCHAR" property="summary" />
-    <result column="lat" jdbcType="DOUBLE" property="lat" />
-    <result column="lng" jdbcType="DOUBLE" property="lng" />
+    <result column="latitude" jdbcType="DOUBLE" property="lat" />
+    <result column="longitude" jdbcType="DOUBLE" property="lng" />
     <result column="operate_ip" jdbcType="VARCHAR" property="operateIp" />
     <result column="operate_id" jdbcType="INTEGER" property="operateId" />
     <result column="operate_name" jdbcType="VARCHAR" property="operateName" />
     <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
+
+    <result column="warn_level_id" jdbcType="INTEGER" property="level" />
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.six.datum.domain.Point">
     <result column="json_info" jdbcType="LONGVARCHAR" property="jsonInfo" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, dept_id, dept_name, type_id, type_name, name, preview, address, summary, lat, 
-    lng, operate_ip, operate_id, operate_name, operate_time
+    id, sys_dept_id, sys_dept_name, type_poi_id, type_poi_name, name, preview_path, location, summary, latitude, 
+    longitude, operate_ip, operate_id, operate_name, operate_time
   </sql>
   <sql id="Blob_Column_List">
     json_info
@@ -33,18 +36,18 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from dat_point
+    from info_pois
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from dat_point
+    delete from info_pois
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.six.datum.domain.Point">
-    insert into dat_point (id, dept_id, dept_name, 
-      type_id, type_name, name, 
-      preview, address, summary, 
-      lat, lng, operate_ip, 
+    insert into info_pois (id, sys_dept_id, sys_dept_name, 
+      type_poi_id, type_poi_name, name, 
+      preview_path, location, summary, 
+      latitude, longitude, operate_ip, 
       operate_id, operate_name, operate_time, 
       json_info)
     values (#{id,jdbcType=INTEGER}, #{deptId,jdbcType=INTEGER}, #{deptName,jdbcType=VARCHAR}, 
@@ -55,40 +58,40 @@
       #{jsonInfo,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.six.datum.domain.Point">
-    insert into dat_point
+    insert into info_pois
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
       <if test="deptId != null">
-        dept_id,
+        sys_dept_id,
       </if>
       <if test="deptName != null">
-        dept_name,
+        sys_dept_name,
       </if>
       <if test="typeId != null">
-        type_id,
+        type_poi_id,
       </if>
       <if test="typeName != null">
-        type_name,
+        type_poi_name,
       </if>
       <if test="name != null">
         name,
       </if>
-      <if test="preview != null">
-        preview,
+      <if test="preview_path != null">
+        preview_path,
       </if>
-      <if test="address != null">
-        address,
+      <if test="location != null">
+        location,
       </if>
       <if test="summary != null">
         summary,
       </if>
-      <if test="lat != null">
-        lat,
+      <if test="latitude != null">
+        latitude,
       </if>
-      <if test="lng != null">
-        lng,
+      <if test="longitude != null">
+        longitude,
       </if>
       <if test="operateIp != null">
         operate_ip,
@@ -125,19 +128,19 @@
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="preview != null">
+      <if test="preview_path != null">
         #{preview,jdbcType=VARCHAR},
       </if>
-      <if test="address != null">
+      <if test="location != null">
         #{address,jdbcType=VARCHAR},
       </if>
       <if test="summary != null">
         #{summary,jdbcType=VARCHAR},
       </if>
-      <if test="lat != null">
+      <if test="latitude != null">
         #{lat,jdbcType=DOUBLE},
       </if>
-      <if test="lng != null">
+      <if test="longitude != null">
         #{lng,jdbcType=DOUBLE},
       </if>
       <if test="operateIp != null">
@@ -158,37 +161,37 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.six.datum.domain.Point">
-    update dat_point
+    update info_pois
     <set>
       <if test="deptId != null">
-        dept_id = #{deptId,jdbcType=INTEGER},
+        sys_dept_id = #{deptId,jdbcType=INTEGER},
       </if>
       <if test="deptName != null">
-        dept_name = #{deptName,jdbcType=VARCHAR},
+        sys_dept_name = #{deptName,jdbcType=VARCHAR},
       </if>
       <if test="typeId != null">
-        type_id = #{typeId,jdbcType=INTEGER},
+        type_poi_id = #{typeId,jdbcType=INTEGER},
       </if>
       <if test="typeName != null">
-        type_name = #{typeName,jdbcType=VARCHAR},
+        type_poi_name = #{typeName,jdbcType=VARCHAR},
       </if>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="preview != null">
-        preview = #{preview,jdbcType=VARCHAR},
+      <if test="preview_path != null">
+        preview_path = #{preview,jdbcType=VARCHAR},
       </if>
-      <if test="address != null">
-        address = #{address,jdbcType=VARCHAR},
+      <if test="location != null">
+        location = #{address,jdbcType=VARCHAR},
       </if>
       <if test="summary != null">
         summary = #{summary,jdbcType=VARCHAR},
       </if>
-      <if test="lat != null">
-        lat = #{lat,jdbcType=DOUBLE},
+      <if test="latitude != null">
+        latitude = #{lat,jdbcType=DOUBLE},
       </if>
-      <if test="lng != null">
-        lng = #{lng,jdbcType=DOUBLE},
+      <if test="longitude != null">
+        longitude = #{lng,jdbcType=DOUBLE},
       </if>
       <if test="operateIp != null">
         operate_ip = #{operateIp,jdbcType=VARCHAR},
@@ -209,17 +212,17 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.six.datum.domain.Point">
-    update dat_point
-    set dept_id = #{deptId,jdbcType=INTEGER},
-      dept_name = #{deptName,jdbcType=VARCHAR},
-      type_id = #{typeId,jdbcType=INTEGER},
-      type_name = #{typeName,jdbcType=VARCHAR},
+    update info_pois
+    set sys_dept_id = #{deptId,jdbcType=INTEGER},
+      sys_dept_name = #{deptName,jdbcType=VARCHAR},
+      type_poi_id = #{typeId,jdbcType=INTEGER},
+      type_poi_name = #{typeName,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
-      preview = #{preview,jdbcType=VARCHAR},
-      address = #{address,jdbcType=VARCHAR},
+      preview_path = #{preview,jdbcType=VARCHAR},
+      location = #{address,jdbcType=VARCHAR},
       summary = #{summary,jdbcType=VARCHAR},
-      lat = #{lat,jdbcType=DOUBLE},
-      lng = #{lng,jdbcType=DOUBLE},
+      latitude = #{lat,jdbcType=DOUBLE},
+      longitude = #{lng,jdbcType=DOUBLE},
       operate_ip = #{operateIp,jdbcType=VARCHAR},
       operate_id = #{operateId,jdbcType=INTEGER},
       operate_name = #{operateName,jdbcType=VARCHAR},
@@ -228,21 +231,115 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.six.datum.domain.Point">
-    update dat_point
-    set dept_id = #{deptId,jdbcType=INTEGER},
-      dept_name = #{deptName,jdbcType=VARCHAR},
-      type_id = #{typeId,jdbcType=INTEGER},
-      type_name = #{typeName,jdbcType=VARCHAR},
+    update info_pois
+    set sys_dept_id = #{deptId,jdbcType=INTEGER},
+      sys_dept_name = #{deptName,jdbcType=VARCHAR},
+      type_poi_id = #{typeId,jdbcType=INTEGER},
+      type_poi_name = #{typeName,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
-      preview = #{preview,jdbcType=VARCHAR},
-      address = #{address,jdbcType=VARCHAR},
+      preview_path = #{preview,jdbcType=VARCHAR},
+      location = #{address,jdbcType=VARCHAR},
       summary = #{summary,jdbcType=VARCHAR},
-      lat = #{lat,jdbcType=DOUBLE},
-      lng = #{lng,jdbcType=DOUBLE},
+      latitude = #{lat,jdbcType=DOUBLE},
+      longitude = #{lng,jdbcType=DOUBLE},
       operate_ip = #{operateIp,jdbcType=VARCHAR},
       operate_id = #{operateId,jdbcType=INTEGER},
       operate_name = #{operateName,jdbcType=VARCHAR},
       operate_time = #{operateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!--*************************************************************************************-->
+  <select id="countByUserIdAndDeptId" resultType="java.lang.Integer">
+    SELECT COUNT(1) FROM info_pois P,
+    (
+      SELECT DISTINCT D.id FROM sys_dept_user DU, sys_dept D
+      WHERE DU.user_id = #{userId,jdbcType=INTEGER}
+      AND (D.id = DU.dept_id OR D.level LIKE CONCAT('%',DU.dept_id,'%'))
+      <if test="deptId != null">
+        AND (D.id = #{deptId,jdbcType=INTEGER} OR D.level LIKE CONCAT('%',#{deptId,jdbcType=INTEGER},'%'))
+      </if>
+    ) DP
+    WHERE P.sys_dept_id = DP.id
+    <if test="level != null">
+      <choose>
+        <when test="level > 0">
+          AND P.warn_level_id = #{level,jdbcType=INTEGER}
+        </when>
+        <otherwise>
+          AND P.warn_level_id IS NOT NULL
+        </otherwise>
+      </choose>
+    </if>
+    <if test="query != null">
+      AND (
+      P.name LIKE CONCAT('%',#{query,jdbcType=VARCHAR},'%')
+      OR P.location LIKE CONCAT('%',#{query,jdbcType=VARCHAR},'%')
+      )
+    </if>
+  </select>
+  <select id="selectPageByUserIdAndDeptId" resultMap="BaseResultMap">
+    SELECT P.id, P.sys_dept_id, P.sys_dept_name, P.type_poi_id, P.type_poi_name, P.name, P.preview_path, P.location, P.summary, P.latitude,
+    P.longitude, P.operate_ip, P.operate_id, P.operate_name, P.operate_time, P.warn_level_id, P.time
+    FROM info_pois P,
+    (
+    SELECT DISTINCT D.id FROM sys_dept_user DU, sys_dept D
+    WHERE DU.user_id = #{userId,jdbcType=INTEGER}
+    AND (D.id = DU.dept_id OR D.level LIKE CONCAT('%',DU.dept_id,'%'))
+    <if test="deptId != null">
+      AND (D.id = #{deptId,jdbcType=INTEGER} OR D.level LIKE CONCAT('%',#{deptId,jdbcType=INTEGER},'%'))
+    </if>
+    ) DP
+    WHERE P.sys_dept_id = DP.id
+    <if test="level != null">
+      <choose>
+        <when test="level > 0">
+          AND P.warn_level_id = #{level,jdbcType=INTEGER}
+        </when>
+        <otherwise>
+          AND P.warn_level_id IS NOT NULL
+        </otherwise>
+      </choose>
+    </if>
+    <if test="query != null">
+      AND (
+      P.name LIKE CONCAT('%',#{query,jdbcType=VARCHAR},'%')
+      OR P.location LIKE CONCAT('%',#{query,jdbcType=VARCHAR},'%')
+      )
+    </if>
+    LIMIT #{page.offset,jdbcType=INTEGER}, #{page.size,jdbcType=INTEGER}
+  </select>
+  <select id="countUnDeptId" resultType="java.lang.Integer">
+    SELECT COUNT(1)
+    FROM info_pois
+    WHERE sys_dept_id IS NULL
+    <if test="query != null">
+      AND (
+      name LIKE CONCAT('%',#{query,jdbcType=VARCHAR},'%')
+      OR location LIKE CONCAT('%',#{query,jdbcType=VARCHAR},'%')
+      )
+    </if>
+  </select>
+  <select id="selectPageUnDeptId" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM info_pois
+    WHERE sys_dept_id IS NULL
+    <if test="query != null">
+      AND (
+      name LIKE CONCAT('%',#{query,jdbcType=VARCHAR},'%')
+      OR location LIKE CONCAT('%',#{query,jdbcType=VARCHAR},'%')
+      )
+    </if>
+    LIMIT #{page.offset,jdbcType=INTEGER}, #{page.size,jdbcType=INTEGER}
+  </select>
+  <update id="updateForeach">
+    UPDATE info_pois
+    SET sys_dept_id = #{dept.id,jdbcType=INTEGER},
+    sys_dept_name = #{dept.name,jdbcType=VARCHAR}
+    WHERE id IN
+    <foreach collection ="pointKeys" item="key"  open="(" separator="," close=")">
+      #{key,jdbcType=INTEGER}
+    </foreach >
   </update>
 </mapper>

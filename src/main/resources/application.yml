@@ -3,9 +3,9 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://10.10.10.164/warn?useUnicode=true&characterEncoding=utf8&useSSL=false
-    username: bdmc
-    password: bdmc@oa_maria!23
+    url: jdbc:mysql://10.10.10.133/warn?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: warn_web
+    password: Ps_web#24
     ##  Hikari 连接池配置 ------ 详细配置请访问：https://github:com/brettwooldridge/HikariCP
     hikari:
       ## 最小空闲连接数量
@@ -56,7 +56,15 @@ spring:
 # mybatis 配置
 mybatis:
   mapper-locations: classpath:mapper/**/*Mapper.xml
-
+# 分布式文件系统FDFS配置
+fdfs:
+  so-timeout: 1500 #socket连接超时时长
+  connect-timeout: 600 #连接tracker服务器超时时长
+  thumb-image: #缩略图生成参数，可选
+    width: 150
+    height: 150
+  tracker-list: #TrackerList参数,支持多个，我这里只有一个，如果有多个在下方加- x.x.x.x:port
+    - 10.10.10.164:22122
 server:
   port: 8888
   max-http-header-size: 1048576

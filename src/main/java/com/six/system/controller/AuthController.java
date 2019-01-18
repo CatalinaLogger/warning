@@ -4,15 +4,13 @@ import com.six.system.common.param.AuthParam;
 import com.six.system.common.pojo.JsonData;
 import com.six.system.service.IAuthService;
 import io.swagger.annotations.*;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@Api(tags="组织架构", description="组织架构管理")
-@Slf4j
+@Api(tags="权限控制", description="组织架构管理")
 @CrossOrigin // 支持跨域请求
 @RestController
 @RequestMapping("/system/auth")
@@ -23,14 +21,14 @@ public class AuthController {
 
     @ApiOperation("获取权限树")
     @GetMapping("/select/tree")
-    public JsonData selectAuthTree() {
-        return JsonData.success(authService.selectTree());
+    public JsonData selectTree() {
+        return JsonData.success(authService.selectTree(null));
     }
 
     @ApiOperation("获取角色权限列表")
     @GetMapping("/select/list")
-    public JsonData selectRoleList(@ApiParam(value = "角色ID", required = true) @RequestParam("roleId") Integer roleId) {
-        return JsonData.success(authService.selectByRoleId(roleId));
+    public JsonData selectList(@ApiParam(value = "角色ID", required = true) @RequestParam("roleId") Integer roleId) {
+        return JsonData.success(authService.selectList(roleId));
     }
 
     @ApiOperation("新增权限")

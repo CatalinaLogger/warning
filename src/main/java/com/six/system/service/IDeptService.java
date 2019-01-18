@@ -10,7 +10,7 @@ import java.util.List;
 public interface IDeptService {
     List<DeptNode> selectTree();
 
-    List<Dept> selectByUserId(Integer userId, Boolean child);
+    List<Dept> selectList(Integer userId, Boolean child);
 
     String insert(DeptParam param);
 

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-@Api(tags="角色组/角色授权", description="角色组/角色管理，用户授权等")
+@Api(tags="角色授权", description="角色组/角色管理，用户授权等")
 @Slf4j
 @CrossOrigin // 支持跨域请求
 @RestController
@@ -24,7 +24,7 @@ public class RoleController {
 
     @ApiOperation("获取角色树")
     @GetMapping("/select/tree")
-    public JsonData selectRoleTree() {
+    public JsonData selectTree() {
         return JsonData.success(roleService.selectTree());
     }
 
@@ -67,7 +67,7 @@ public class RoleController {
     @ApiOperation("角色添加成员")
     @ApiImplicitParam(name = "userKeys", value = "用户ID数组，示例：1,2,3", dataType = "string", paramType = "query", required = true)
     @PostMapping("/user/insert")
-    public JsonData insert(@ApiParam(value = "角色ID", required = true) @RequestParam("roleId") Integer roleId,
+    public JsonData insertUser(@ApiParam(value = "角色ID", required = true) @RequestParam("roleId") Integer roleId,
                            @RequestParam("userKeys") List<Integer> userKeys) {
         return JsonData.successOperate(roleService.insertRoleUser(roleId, userKeys));
     }
@@ -75,7 +75,7 @@ public class RoleController {
     @ApiOperation("角色移除成员")
     @ApiImplicitParam(name = "userKeys", value = "用户ID数组，示例：1,2,3", dataType = "string", paramType = "query", required = true)
     @DeleteMapping("/user/delete")
-    public JsonData delete(@ApiParam(value = "角色ID", required = true) @RequestParam("roleId") Integer roleId,
+    public JsonData deleteUser(@ApiParam(value = "角色ID", required = true) @RequestParam("roleId") Integer roleId,
                            @RequestParam("userKeys") List<Integer> userKeys) {
         return JsonData.successOperate(roleService.deleteRoleUser(roleId, userKeys));
     }

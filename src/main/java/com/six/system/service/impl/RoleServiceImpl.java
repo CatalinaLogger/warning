@@ -88,7 +88,7 @@ public class RoleServiceImpl implements IRoleService {
         }
         Role role = roleMapper.selectByPrimaryKey(param.getId());
         if (ObjectUtils.isEmpty(role)) {
-            throw new SixException(ResultEnum.ERROR_PARAM.getCode(), "待更新" + type + "不存在");
+            throw new SixException(ResultEnum.ERROR_PARAM.getCode(), "未找到相匹配的记录");
         }
         BeanUtils.copyProperties(param, role);
         SixUtil.setOperate(role);
@@ -164,7 +164,7 @@ public class RoleServiceImpl implements IRoleService {
     public String insertRoleUser(Integer roleId, List<Integer> userKeys) {
         Role role = roleMapper.selectByPrimaryKey(roleId);
         if (ObjectUtils.isEmpty(role)) {
-            throw new SixException(ResultEnum.ERROR_PARAM.getCode(), "角色未找到");
+            throw new SixException(ResultEnum.ERROR_PARAM.getCode(), "未找到相匹配的记录");
         }
         SixUtil.setOperate(role);
         roleUserMapper.insertForeach(role, userKeys);
@@ -178,7 +178,7 @@ public class RoleServiceImpl implements IRoleService {
         }
         Role role = roleMapper.selectByPrimaryKey(roleId);
         if (ObjectUtils.isEmpty(role)) {
-            throw new SixException(ResultEnum.ERROR_PARAM.getCode(), "角色未找到");
+            throw new SixException(ResultEnum.ERROR_PARAM.getCode(), "未找到相匹配的记录");
         }
         roleUserMapper.deleteForeach(role, userKeys);
         return "移除成员成功";

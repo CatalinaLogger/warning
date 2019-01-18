@@ -12,40 +12,13 @@ import java.util.List;
 public interface IUserService {
 
     /**
-     * 获取登录用户信息
-     * @return 登录用户信息
-     */
-    User select();
-
-    /**
-     * 根据用户姓名获取用户信息
-     * @param name 用户姓名
-     * @return 用户信息
-     */
-    List<User> selectByName(String name);
-
-    /**
-     * 根据用户名获取用户信息
-     * @param username 用户名
-     * @return 用户信息
-     */
-    User selectByUsername(String username);
-
-    /**
-     * 根据角色编码获取用户列表
-     * @param roleCode 角色编码
-     * @return 用户列表
-     */
-    List<User> selectByRoleCode(String roleCode);
-
-    /**
      * 根据部门ID分页查询用户列表
      * @param deptId 部门ID
      * @param query 查询条件（username, name, phone, mail）
      * @param page 分页条件
      * @return 用户列表
      */
-    PageData<User> selectDeptPage(Integer deptId, String query, PageParam page);
+    PageData<User> selectPageDept(Integer deptId, String query, PageParam page);
 
     /**
      * 根据角色ID分页查询用户列表
@@ -55,7 +28,7 @@ public interface IUserService {
      * @param param 分页条件
      * @return 用户列表
      */
-    PageData<User> selectRolePage(Boolean bound, Integer roleId, String query, PageParam param);
+    PageData<User> selectPageRole(Boolean bound, Integer roleId, String query, PageParam param);
 
     /**
      * 检查用户信息是否已存在
@@ -128,14 +101,6 @@ public interface IUserService {
      * @return 新的token
      */
     String refreshToken(Integer userId);
-
-    /**
-     * 重置密码
-     * @param mail 邮箱
-     * @param code 验证码
-     * @return 成功提示语
-     */
-    String resetPassword(String mail, String code);
 
     /**
      * 修改密码
